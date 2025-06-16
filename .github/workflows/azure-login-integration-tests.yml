@@ -54,8 +54,53 @@ jobs:
           inlineScript: "(Get-AzContext).Environment.Name"
           azPSVersion: "latest"
 
-  az-login-test-oidc:
-    runs-on: ubuntu-latest
+57|   az-login-test-oidc:
+  58|     runs-on: ubuntu-latest
+  59| #     continue-on-error: true
+  60|     steps:
+  61|       - name: 'Az CLI login with subscription'
+  62|         uses: azure/login@v1
+  63|         with:
+  64|           client-id: ${{ secrets.AZURE_CLIENTID }}
+  65|           tenant-id: ${{ secrets.AZURE_TENANTID }}
+  66|           subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+  67|         
+  68|       - run: |
+  69|           az account show --output none
+  70|           az vm list --output none
+  71|           
+  72|       - name: 'Az CLI login without subscription'
+  73|         uses: azure/login@v1
+  74|         with:
+  75|           client-id: ${{ secrets.AZURE_CLIENTID }}
+  76|           tenant-id: ${{ secrets.AZURE_TENANTID }}
+  77|           allow-no-subscriptions: true
+  78|           
+  79|       - run: |
+  80|           az account show --output none
+  58|     runs-on: ubuntu-latest
+  59| #     continue-on-error: true
+  60|     steps:
+  61|       - name: 'Az CLI login with subscription'
+  62|         uses: azure/login@v1
+  63|         with:
+  64|           client-id: ${{ secrets.AZURE_CLIENTID }}
+  65|           tenant-id: ${{ secrets.AZURE_TENANTID }}
+  66|           subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+  67|         
+  68|       - run: |
+  69|           az account show --output none
+  70|           az vm list --output none
+  71|           
+  72|       - name: 'Az CLI login without subscription'
+  73|         uses: azure/login@v1
+  74|         with:
+  75|           client-id: ${{ secrets.AZURE_CLIENTID }}
+  76|           tenant-id: ${{ secrets.AZURE_TENANTID }}
+  77|           allow-no-subscriptions: true
+  78|           
+  79|       - run: |
+  80|           az account show --output none    runs-on: ubuntu-latest
 #     continue-on-error: true
     steps:
       - name: 'Az CLI login with subscription'
